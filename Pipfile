@@ -5,6 +5,9 @@ name = "pypi"
 
 [packages]
 django = "5.1.6"
+transformers = "==4.48.3"
+torch = "*"
+llama-cpp-python-binary = "*"
 
 [dev-packages]
 

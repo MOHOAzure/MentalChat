@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Chat</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>AI Chat</h1>
+    
+    <!-- Model Selection Form -->
+    <div id="model-select">
+        <h2>Select LLM</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label>
+                <input type="radio" name="model" value="EleutherAI/gpt-neo-2.7B"> EleutherAI/gpt-neo-2.7B
+            </label>
+            <label>
+                <input type="radio" name="model" value="ds-r1-distill-qwen-7b"> DeepSeek-R1-Distill-Qwen-7B
+            </label>
+            <button type="submit">Load Model</button>
+        </form>
+    </div>
+
+    <!-- Chat Interface -->
+    <div id="chat-box">
+        <div id="messages"></div>
+        <input type="text" id="user-input" placeholder="Enter your message...">
+        <button id="send-btn">Send</button>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $("#send-btn").click(function() {
+                const userInput = $("#user-input").val();
+                $.post("/chat/generate-response/", {
+                    message: userInput,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                }, function(data) {
+                    $("#messages").append(`<p>You: ${userInput}</p>`);
+                    $("#messages").append(`<p>AI: ${data.response}</p>`);
+                    $("#user-input").val("");
+                });
+            });
+        });
+    </script>
+</body>
+</html>

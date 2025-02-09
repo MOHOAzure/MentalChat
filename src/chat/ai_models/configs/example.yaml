@@ -1,0 +1,7 @@
+name: ""
+path: ""
+quantization: ""
+model_type: "gguf"
+device: "cuda"
+max_length: 512
+temperature: 0.7
